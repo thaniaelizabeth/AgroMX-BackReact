@@ -1,4 +1,4 @@
-INSERT INTO privilages(privilage_name)
+INSERT INTO privileges(privilege_name)
 VALUES
 ("Cliente"),
 ("Administrador");

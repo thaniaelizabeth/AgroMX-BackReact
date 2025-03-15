@@ -23,7 +23,10 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.3.232'
 }
 
 tasks.named('test') {

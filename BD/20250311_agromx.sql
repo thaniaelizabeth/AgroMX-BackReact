@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Products` (
   `product_id` BIGINT NOT NULL AUTO_INCREMENT,
   `product_name` VARCHAR(45) NOT NULL,
   `price` DECIMAL(10,2) NOT NULL,
+  `unit` VARCHAR(10) NOT NULL,
   `stock` BIGINT NOT NULL,
   `fk_category_id` BIGINT NOT NULL,
   `description` VARCHAR(1000) NOT NULL,
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Orders` (
   `order_id` BIGINT NOT NULL AUTO_INCREMENT,
   `date_time` DATETIME NOT NULL,
   `fk_user_id` BIGINT NOT NULL,
+  `total` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`order_id`, `fk_user_id`),
   INDEX `fk_Sales_Users1_idx` (`fk_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_Sales_Users1`
@@ -110,22 +112,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Product_has_order`
+-- Table `mydb`.`product_order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Product_has_order` (
+CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Product_Order` (
   `fk_order_id` BIGINT NOT NULL,
   `fk_product_id` BIGINT NOT NULL,
   `amount_sold` DECIMAL(10,2) NOT NULL,
   `quanty` BIGINT NOT NULL,
   PRIMARY KEY (`fk_order_id`, `fk_product_id`),
   INDEX `fk_Products_has_order_order1_idx` (`fk_order_id` ASC) VISIBLE,
-  INDEX `fk_Product_has_order_Products1_idx` (`fk_product_id` ASC) VISIBLE,
+  INDEX `fk_product_order_Products1_idx` (`fk_product_id` ASC) VISIBLE,
   CONSTRAINT `fk_Products_has_order_order1`
     FOREIGN KEY (`fk_order_id`)
     REFERENCES `agromx_20250311`.`Orders` (`order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Product_has_order_Products1`
+  CONSTRAINT `fk_product_order_Products1`
     FOREIGN KEY (`fk_product_id`)
     REFERENCES `agromx_20250311`.`Products` (`product_id`)
     ON DELETE NO ACTION
@@ -156,12 +158,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Privilages`
+-- Table `mydb`.`privileges`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Privilages` (
-  `privilage_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `privilage_name` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`privilage_id`))
+CREATE TABLE IF NOT EXISTS `agromx_20250311`.`Privileges` (
+  `privilege_id` BIGINT NOT NULL AUTO_INCREMENT,
+  `privilege_name` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`privilege_id`))
 ENGINE = InnoDB;
 
 
@@ -169,14 +171,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`user_has_privilege`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `agromx_20250311`.`user_has_privilege` (
-  `fk_privilage_id` BIGINT NOT NULL,
+  `fk_privilege_id` BIGINT NOT NULL,
   `fk_user_id` BIGINT NOT NULL,
-  PRIMARY KEY (`fk_privilage_id`, `fk_user_id`),
-  INDEX `fk_user_has_privilege_Privilages1_idx` (`fk_privilage_id` ASC) VISIBLE,
+  PRIMARY KEY (`fk_privilege_id`, `fk_user_id`),
+  INDEX `fk_user_has_privilege_privileges1_idx` (`fk_privilege_id` ASC) VISIBLE,
   INDEX `fk_user_has_privilege_Users1_idx` (`fk_user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_has_privilege_Privilages1`
-    FOREIGN KEY (`fk_privilage_id`)
-    REFERENCES `agromx_20250311`.`Privilages` (`privilage_id`)
+  CONSTRAINT `fk_user_has_privilege_privileges1`
+    FOREIGN KEY (`fk_privilege_id`)
+    REFERENCES `agromx_20250311`.`privileges` (`privilege_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_has_privilege_Users1`

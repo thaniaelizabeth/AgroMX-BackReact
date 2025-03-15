@@ -93,26 +93,26 @@ LOCK TABLES `orders` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `privilages`
+-- Table structure for table `privileges`
 --
 
-DROP TABLE IF EXISTS `privilages`;
+DROP TABLE IF EXISTS `privileges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `privilages` (
-  `privilage_id` bigint NOT NULL AUTO_INCREMENT,
-  `privilage_name` varchar(20) NOT NULL,
-  PRIMARY KEY (`privilage_id`)
+CREATE TABLE `privileges` (
+  `privilege_id` bigint NOT NULL AUTO_INCREMENT,
+  `privilege_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`privilege_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `privilages`
+-- Dumping data for table `privileges`
 --
 
-LOCK TABLES `privilages` WRITE;
-/*!40000 ALTER TABLE `privilages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `privilages` ENABLE KEYS */;
+LOCK TABLES `privileges` WRITE;
+/*!40000 ALTER TABLE `privileges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `privileges` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -167,32 +167,32 @@ LOCK TABLES `producers_has_tecniques` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `product_has_order`
+-- Table structure for table `product_order`
 --
 
-DROP TABLE IF EXISTS `product_has_order`;
+DROP TABLE IF EXISTS `product_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product_has_order` (
+CREATE TABLE `product_order` (
   `order_has_product_id` bigint NOT NULL AUTO_INCREMENT,
   `fk_order_id` bigint NOT NULL,
   `fk_product_id` bigint NOT NULL,
   `amount` decimal(10,0) NOT NULL,
   PRIMARY KEY (`order_has_product_id`,`fk_order_id`,`fk_product_id`),
   KEY `fk_Products_has_order_order1_idx` (`fk_order_id`),
-  KEY `fk_Product_has_order_Products1_idx` (`fk_product_id`),
-  CONSTRAINT `fk_Product_has_order_Products1` FOREIGN KEY (`fk_product_id`) REFERENCES `products` (`product_id`),
+  KEY `fk_product_order_Products1_idx` (`fk_product_id`),
+  CONSTRAINT `fk_product_order_Products1` FOREIGN KEY (`fk_product_id`) REFERENCES `products` (`product_id`),
   CONSTRAINT `fk_Products_has_order_order1` FOREIGN KEY (`fk_order_id`) REFERENCES `orders` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product_has_order`
+-- Dumping data for table `product_order`
 --
 
-LOCK TABLES `product_has_order` WRITE;
-/*!40000 ALTER TABLE `product_has_order` DISABLE KEYS */;
-/*!40000 ALTER TABLE `product_has_order` ENABLE KEYS */;
+LOCK TABLES `product_order` WRITE;
+/*!40000 ALTER TABLE `product_order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -261,12 +261,12 @@ DROP TABLE IF EXISTS `user_has_privilege`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_has_privilege` (
   `user_has_privilege_id` bigint NOT NULL AUTO_INCREMENT,
-  `fk_privilage_id` bigint NOT NULL,
+  `fk_privilege_id` bigint NOT NULL,
   `fk_user_id` bigint NOT NULL,
-  PRIMARY KEY (`user_has_privilege_id`,`fk_privilage_id`,`fk_user_id`),
-  KEY `fk_user_has_privilege_Privilages1_idx` (`fk_privilage_id`),
+  PRIMARY KEY (`user_has_privilege_id`,`fk_privilege_id`,`fk_user_id`),
+  KEY `fk_user_has_privilege_privileges1_idx` (`fk_privilege_id`),
   KEY `fk_user_has_privilege_Users1_idx` (`fk_user_id`),
-  CONSTRAINT `fk_user_has_privilege_Privilages1` FOREIGN KEY (`fk_privilage_id`) REFERENCES `privilages` (`privilage_id`),
+  CONSTRAINT `fk_user_has_privilege_privileges1` FOREIGN KEY (`fk_privilege_id`) REFERENCES `privileges` (`privilege_id`),
   CONSTRAINT `fk_user_has_privilege_Users1` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
